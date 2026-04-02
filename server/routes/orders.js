@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
   if (req.query.status) query = query.eq('status', req.query.status);
 
   const { data, error } = await query;
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) return res.status(500).json({ error: 'Errore nel caricamento' });
   res.json(data.map(toOrder));
 });
 
@@ -37,19 +37,27 @@ router.get('/:id', async (req, res) => {
 // POST /api/orders
 router.post('/', async (req, res) => {
   const { tableNumber, items, notes } = req.body;
-  if (!tableNumber || !Array.isArray(items) || items.length === 0) {
-    return res.status(400).json({ error: 'tableNumber e items sono obbligatori' });
+
+  const tableNum = Number(tableNumber);
+  if (!Number.isInteger(tableNum) || tableNum < 1 || tableNum > 999) {
+    return res.status(400).json({ error: 'tableNumber non valido' });
+  }
+  if (!Array.isArray(items) || items.length === 0 || items.length > 100) {
+    return res.status(400).json({ error: 'items non valido' });
+  }
+  if (notes && typeof notes !== 'string') {
+    return res.status(400).json({ error: 'notes non valido' });
   }
 
   const { data, error } = await supabase.from('orders').insert({
     id:           uuidv4(),
-    table_number: tableNumber,
+    table_number: tableNum,
     items:        items.map(item => ({ ...item, paidQty: 0 })),
-    notes:        notes || '',
+    notes:        String(notes || '').slice(0, 500),
     status:       'delivered',
   }).select().single();
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) return res.status(500).json({ error: 'Errore nel salvataggio' });
   res.status(201).json(toOrder(data));
 });
 
@@ -71,30 +79,31 @@ router.patch('/:id/status', async (req, res) => {
 // PATCH /api/orders/:id/pay
 router.patch('/:id/pay', async (req, res) => {
   const { payments } = req.body;
-  if (!Array.isArray(payments)) {
-    return res.status(400).json({ error: 'payments deve essere un array' });
+  if (!Array.isArray(payments) || payments.length > 100) {
+    return res.status(400).json({ error: 'payments non valido' });
   }
 
-  // Leggi ordine corrente
   const { data: row, error: fetchError } = await supabase
     .from('orders').select('*').eq('id', req.params.id).single();
   if (fetchError) return res.status(404).json({ error: 'Ordine non trovato' });
 
   const items = [...row.items];
   payments.forEach(({ itemIndex, count }) => {
-    if (items[itemIndex]) {
-      items[itemIndex] = {
-        ...items[itemIndex],
-        paidQty: Math.min((items[itemIndex].paidQty ?? 0) + count, items[itemIndex].quantity),
-      };
-    }
+    const idx = Number(itemIndex);
+    const cnt = Number(count);
+    if (!Number.isInteger(idx) || idx < 0 || idx >= items.length) return;
+    if (!Number.isInteger(cnt) || cnt < 1) return;
+    items[idx] = {
+      ...items[idx],
+      paidQty: Math.min((items[idx].paidQty ?? 0) + cnt, items[idx].quantity),
+    };
   });
 
   const { data, error } = await supabase.from('orders')
     .update({ items, updated_at: new Date().toISOString() })
     .eq('id', req.params.id).select().single();
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) return res.status(500).json({ error: 'Errore nel pagamento' });
   res.json(toOrder(data));
 });
 

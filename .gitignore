@@ -1,2 +1,9 @@
 node_modules/
+dist/
+.DS_Store
+
+# Variabili d'ambiente - mai committare
 server/.env
+server/.env.*
+.env
+.env.*
