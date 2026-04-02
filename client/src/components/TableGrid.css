@@ -1,0 +1,72 @@
+.table-grid-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 480px) {
+  .table-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+}
+
+@media (min-width: 700px) {
+  .table-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+}
+
+.table-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 20px 12px;
+  border-radius: 14px;
+  border: 3px solid transparent;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+  text-align: center;
+  min-height: 110px;
+  /* Target minimo 44px garantito dalla minHeight */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (min-width: 640px) {
+  .table-card { padding: 28px 16px; min-height: auto; }
+}
+
+.table-card:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.table-card.status-free      { border-color: #e5e7eb; color: #6b7280; }
+.table-card.status-delivered { border-color: #22c55e; background: #f0fdf4; color: #166534; }
+.table-card.status-locked    { border-color: #d1d5db; background: #f3f4f6; color: #9ca3af; cursor: not-allowed; opacity: 0.7; }
+
+.table-icon { font-size: 1.5rem; line-height: 1; }
+
+.table-num {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.table-status-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.table-order-count {
+  font-size: 0.68rem;
+  background: rgba(0,0,0,0.07);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}

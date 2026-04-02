@@ -1,0 +1,100 @@
+.floor-tabs-wrapper {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 16px;
+  padding-left:  max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+
+.floor-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.floor-tabs::-webkit-scrollbar { display: none; }
+
+.floor-tab {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 2px;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.floor-tab.active { border-bottom-color: #e85d04; }
+
+.floor-tab > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floor-tab.active > span { color: #e85d04; }
+
+.tab-count { font-weight: 400; font-size: 0.72rem; color: #9ca3af; font-style: normal; }
+
+.tab-delete {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1rem;
+  padding: 4px 6px;
+  min-height: 44px;
+  min-width: 36px;
+  border-radius: 4px;
+}
+
+.tab-delete:active { background: #fee2e2; color: #b91c1c; }
+
+.edit-form {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.edit-form input { width: 120px; padding: 6px 8px; font-size: 16px; }
+
+.floor-add-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  flex-shrink: 0;
+}
+
+.floor-add-form input { padding: 6px 8px; font-size: 16px; }
+
+.floor-add-form button {
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  background: #f3f4f6;
+  color: #374151;
+  min-height: 36px;
+}
+
+.floor-add-form button[type="submit"] { background: #e85d04; color: white; }
+
+.floor-add-btn {
+  background: none;
+  border: none;
+  color: #e85d04;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0 10px;
+  min-height: 44px;
+  flex-shrink: 0;
+}

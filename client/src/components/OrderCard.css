@@ -1,0 +1,58 @@
+.order-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border-left: 4px solid #22c55e;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.card-time { font-size: 0.78rem; color: #9ca3af; }
+
+.item-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.item-list li { display: flex; align-items: center; gap: 6px; min-height: 24px; }
+
+.item-qty  { font-weight: 700; color: #e85d04; min-width: 28px; }
+.item-name { flex: 1; color: #374151; }
+.item-price { color: #6b7280; font-size: 0.82rem; white-space: nowrap; }
+
+.card-notes {
+  font-size: 0.82rem;
+  color: #6b7280;
+  font-style: italic;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 8px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 10px;
+}
+
+.card-total { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; }
+
+.btn-delete {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 0 14px;
+  font-size: 0.82rem;
+  min-height: 36px;
+}
